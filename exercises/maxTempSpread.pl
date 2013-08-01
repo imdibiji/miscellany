@@ -42,7 +42,6 @@ open (my $inputFh, "<", $inputFile)
 my $minSpread;    # current min temp spread for dataset
 my $minSpreadDay; # current day on which min spread occurs
 
-# Main loop
 while (<$inputFh>) {
   # skip lines that are not daily data
   unless (/^\s*\d+\s+\d+\s+/) {
@@ -54,6 +53,7 @@ while (<$inputFh>) {
   my $day = $elements[0];
   my $minTemp = $elements[2];
   my $maxTemp = $elements[1];
+  # remove non-numerics
   $minTemp =~ s/\D//g;
   $maxTemp =~ s/\D//g;
   my $spread = $maxTemp - $minTemp;
@@ -62,14 +62,13 @@ while (<$inputFh>) {
     $minSpread = $spread;
     $minSpreadDay = $day;
     next;
-  }
-  if ( $spread < $minSpread ) {
+  } elsif ( $spread < $minSpread ) {
     $minSpread = $spread;
     $minSpreadDay = $day;
   }
 }
 
-print "min spread = $minSpread on day $minSpreadDay\n";
+print $minSpreadDay;
 
 # cleanup
 close $inputFh;
