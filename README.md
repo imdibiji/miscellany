@@ -1,4 +1,4 @@
 miscellany
 ==========
 
-various things
+This repository holds a plethora of things.
